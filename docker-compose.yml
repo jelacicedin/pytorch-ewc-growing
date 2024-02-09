@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+  dev:
+    build: .
+    image: pytorch-ewc
+    container_name: pytorch-ewc-dev
+    ports:
+      - 80:80
+    volumes:
+      - .:/code
+      - "~/.gitconfig:/etc/gitconfig" # carry over username
+      - "/mnt/c/Users/ejc01/AppData/Roaming/Code/User:/root/.local/share/code-server" # carry over local VS code settings
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    secrets: 
+    - host_ssh_key
+    command: bash -c "nvidia-smi && jupyter lab --ip=0.0.0.0 --port=80 --no-browser --allow-root --LabApp.token=''"
+
+secrets:  
+  host_ssh_key:
+    file: ~/.ssh/id_rsa
+volumes:
+    db_data:
+
