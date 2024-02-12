@@ -3,10 +3,11 @@ version: '3.1'
 services:
   dev:
     build: .
-    image: pytorch-ewc
-    container_name: pytorch-ewc-dev
+    image: pytorch-ewc-growing
+    container_name: pytorch-ewc-growing-dev
     ports:
       - 80:80
+      - 8097:8097
     volumes:
       - .:/code
       - "~/.gitconfig:/etc/gitconfig" # carry over username
@@ -20,11 +21,22 @@ services:
               capabilities: [gpu]
     secrets: 
     - host_ssh_key
+    - kaggle_key
     command: bash -c "nvidia-smi && jupyter lab --ip=0.0.0.0 --port=80 --no-browser --allow-root --LabApp.token=''"
-
+    environment: 
+      - PORT=8097
+      - ENV_PATH=$HOME/.visdom
+      - LOGGING_LEVEL=INFO
+      - HOSTNAME=localhost
+      - BASE_URL=/
+      - READONLY=True
+      - ENABLE_LOGIN=False
+      - FORCE_NEW_COOKIE=False
 secrets:  
   host_ssh_key:
     file: ~/.ssh/id_rsa
+  kaggle_key:
+    file: ~/.kaggle/kaggle.json
 volumes:
     db_data:
 

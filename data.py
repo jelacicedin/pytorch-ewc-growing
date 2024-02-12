@@ -1,5 +1,5 @@
 from torchvision import datasets, transforms
-
+import opendatasets as od
 
 def _permutate_image_pixels(image, permutation):
     if permutation is None:
@@ -11,6 +11,12 @@ def _permutate_image_pixels(image, permutation):
     image.view(c, h, w)
     return image
 
+def download_dataset(dataset_name: str):
+    # Assign the Kaggle data set URL into variable
+    dataset = 'https://www.kaggle.com/ryanholbrook/dl-course-data'
+    # Using opendatasets let's download the data sets
+    od.download_kaggle_dataset()
+    od.download(dataset)
 
 def get_dataset(name, train=True, download=True, permutation=None):
     dataset_class = AVAILABLE_DATASETS[name]
