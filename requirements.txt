@@ -6,6 +6,7 @@ scipy
 scikit-learn
 numpy
 pillow
+pandas
 
 # utils (debugging)
 pdbpp

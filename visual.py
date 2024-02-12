@@ -4,7 +4,7 @@ from torch.cuda import FloatTensor as CUDATensor
 _WINDOW_CASH = {}
 
 
-def visualize_image(vis, tensor, name, label=None, w=250, h=250,
+def visualize_image(vis, tensor, name, label=None, w=250, h=1,
                     update_window_without_label=False):
     tensor = tensor.cpu() if isinstance(tensor, CUDATensor) else tensor
     title = name + ('-{}'.format(label) if label is not None else '')
@@ -22,7 +22,7 @@ def visualize_image(vis, tensor, name, label=None, w=250, h=250,
         )
 
 
-def visualize_images(vis, tensor, name, label=None, w=250, h=250,
+def visualize_images(vis, tensor, name, label=None, w=250, h=1,
                      update_window_without_label=False):
     tensor = tensor.cpu() if isinstance(tensor, CUDATensor) else tensor
     title = name + ('-{}'.format(label) if label is not None else '')
@@ -40,7 +40,7 @@ def visualize_images(vis, tensor, name, label=None, w=250, h=250,
         )
 
 
-def visualize_kernel(vis, kernel, name, label=None, w=250, h=250,
+def visualize_kernel(vis, kernel, name, label=None, w=250, h=1,
                      update_window_without_label=False, compress_tensor=False):
     # Do not visualize kernels that does not exists.
     if kernel is None:
